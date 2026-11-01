@@ -35,8 +35,8 @@ lb.addEventListener('click',function(e){if(e.target===lb)close()});
 document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1)});
 var sx=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(idx+(d<0?1:-1))});
 })();
-/* booking form: set BOOKING_KEY to a Web3Forms access key to send straight to the inbox; empty = opens the visitor's email app */
-var BOOKING_TO='Paraboyglobalrecords@gmail.com',BOOKING_KEY='';
+/* booking form: BOOKING_KEY is a Web3Forms access key. The key maps to the inbox on Web3Forms' side, so no email address appears in this site. */
+var BOOKING_KEY='';
 (function(){
 var f=document.getElementById('bform');if(!f)return;
 var st=document.getElementById('b-status'),btn=document.getElementById('b-send'),groups=f.querySelectorAll('.grp');
@@ -57,15 +57,13 @@ function lines(o){return Object.keys(L).filter(function(k){return o[k]}).map(fun
 f.addEventListener('submit',function(e){e.preventDefault();if(!valid())return;
 if(f.botcheck.checked){say('ok','Thank you. Your request was received.');return}
 var o=data(),subject='Booking request: '+o.booking_type+' | '+o.name;
-if(!BOOKING_KEY){var body=lines(o)+'\n\nSent from suonosai.com';
-location.href='mailto:'+BOOKING_TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-say('ok','Your email app should open with the request filled in. Press send there to finish. If nothing opens, email <a href="mailto:'+BOOKING_TO+'">'+BOOKING_TO+'</a> directly.');return}
+if(!BOOKING_KEY){say('bad','Online booking requests are not switched on yet. Please call or WhatsApp one of the booking numbers above.');return}
 btn.disabled=true;btn.textContent='Sending...';
 var payload={access_key:BOOKING_KEY,subject:subject,from_name:'suonosai.com booking form',message:lines(o)};
 for(var k in o)payload[L[k]||k]=o[k];payload.botcheck=false;
 fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
 .then(function(r){return r.json()}).then(function(j){
 if(j&&j.success){f.reset();sync();say('ok','<b>Request sent.</b> Thank you, '+o.name.split(' ')[0]+'. The booking team will reply to '+o.email+' soon.')}else throw new Error('x')})
-.catch(function(){say('bad','Something went wrong and your request was not sent. Email it to <a href="mailto:'+BOOKING_TO+'?subject='+encodeURIComponent(subject)+'">'+BOOKING_TO+'</a> or call a booking number above.')})
+.catch(function(){say('bad','Something went wrong and your request was not sent. Please try again, or call or WhatsApp one of the booking numbers above.')})
 .then(function(){btn.disabled=false;btn.textContent='Send booking request'})});
 })();
