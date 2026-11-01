@@ -59,8 +59,8 @@ if(f.botcheck.checked){say('ok','Thank you. Your request was received.');return}
 var o=data(),subject='Booking request: '+o.booking_type+' | '+o.name;
 if(!BOOKING_KEY){say('bad','Online booking requests are not switched on yet. Please call or WhatsApp one of the booking numbers above.');return}
 btn.disabled=true;btn.textContent='Sending...';
-var payload={access_key:BOOKING_KEY,subject:subject,from_name:'suonosai.com booking form',message:lines(o)};
-for(var k in o)payload[L[k]||k]=o[k];payload.botcheck=false;
+var payload={access_key:BOOKING_KEY,subject:subject,from_name:'suonosai.com booking form'};
+for(var k in o)payload[(k==='name'||k==='email'||k==='message')?k:(L[k]||k)]=o[k];payload.botcheck=false;
 fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
 .then(function(r){return r.json()}).then(function(j){
 if(j&&j.success){f.reset();sync();say('ok','<b>Request sent.</b> Thank you, '+o.name.split(' ')[0]+'. The booking team will reply to '+o.email+' soon.')}else throw new Error('x')})
