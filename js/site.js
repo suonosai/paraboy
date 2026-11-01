@@ -36,7 +36,7 @@ document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))
 var sx=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(idx+(d<0?1:-1))});
 })();
 /* booking form: BOOKING_KEY is a Web3Forms access key. The key maps to the inbox on Web3Forms' side, so no email address appears in this site. */
-var BOOKING_KEY='';
+var BOOKING_KEY='2cae122e-b081-4c98-93c5-c82e302bbe5e';
 (function(){
 var f=document.getElementById('bform');if(!f)return;
 var st=document.getElementById('b-status'),btn=document.getElementById('b-send'),groups=f.querySelectorAll('.grp');
