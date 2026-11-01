@@ -35,3 +35,37 @@ lb.addEventListener('click',function(e){if(e.target===lb)close()});
 document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1)});
 var sx=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(idx+(d<0?1:-1))});
 })();
+/* booking form: set BOOKING_KEY to a Web3Forms access key to send straight to the inbox; empty = opens the visitor's email app */
+var BOOKING_TO='Paraboyglobalrecords@gmail.com',BOOKING_KEY='';
+(function(){
+var f=document.getElementById('bform');if(!f)return;
+var st=document.getElementById('b-status'),btn=document.getElementById('b-send'),groups=f.querySelectorAll('.grp');
+function say(cls,html){st.className='status '+cls;st.innerHTML=html;st.hidden=false;st.scrollIntoView({block:'nearest',behavior:'smooth'})}
+function sync(){var r=f.querySelector('input[name=type]:checked'),g=r?r.getAttribute('data-g'):'';
+for(var i=0;i<groups.length;i++){var s=groups[i].getAttribute('data-show');groups[i].hidden=!(r&&(s==='any'||s===g))}}
+f.addEventListener('change',function(e){if(e.target.name==='type'){sync();var p=f.querySelector('.err[data-for=type]');if(p)p.hidden=true}});
+function bad(el,on){var p=el.parentNode.querySelector('.err');if(p)p.hidden=!on;el.setAttribute('aria-invalid',on?'true':'false')}
+f.addEventListener('input',function(e){if(e.target.getAttribute('aria-invalid')==='true'&&e.target.checkValidity())bad(e.target,false)});
+function valid(){var ok=true,first=null,r=f.querySelector('input[name=type]:checked'),tp=f.querySelector('.err[data-for=type]');
+if(!r){tp.hidden=false;ok=false;first=f.querySelector('input[name=type]')}else tp.hidden=true;
+['b-name','b-email','b-msg'].forEach(function(id){var el=document.getElementById(id);el.value=el.value.trim();var v=el.checkValidity()&&el.value!=='';bad(el,!v);if(!v){ok=false;if(!first)first=el}});
+if(first)first.focus();return ok}
+function data(){var o={},els=f.elements,i,e;for(i=0;i<els.length;i++){e=els[i];if(!e.name||e.name==='botcheck'||e.name==='type'||e.type==='radio')continue;if(e.value&&e.value.trim())o[e.name]=e.value.trim()}
+o.booking_type=f.querySelector('input[name=type]:checked').value;return o}
+var L={booking_type:'Booking type',name:'Name',email:'Email',phone:'Phone or WhatsApp',organisation:'Organisation',event_date:'Event date',city_country:'City and country',venue:'Venue',attendance:'Attendance',link:'Link',budget:'Budget',preferred_contact:'Best way to reach',message:'Message'};
+function lines(o){return Object.keys(L).filter(function(k){return o[k]}).map(function(k){return L[k]+': '+o[k]}).join('\n')}
+f.addEventListener('submit',function(e){e.preventDefault();if(!valid())return;
+if(f.botcheck.checked){say('ok','Thank you. Your request was received.');return}
+var o=data(),subject='Booking request: '+o.booking_type+' | '+o.name;
+if(!BOOKING_KEY){var body=lines(o)+'\n\nSent from suonosai.com';
+location.href='mailto:'+BOOKING_TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+say('ok','Your email app should open with the request filled in. Press send there to finish. If nothing opens, email <a href="mailto:'+BOOKING_TO+'">'+BOOKING_TO+'</a> directly.');return}
+btn.disabled=true;btn.textContent='Sending...';
+var payload={access_key:BOOKING_KEY,subject:subject,from_name:'suonosai.com booking form',message:lines(o)};
+for(var k in o)payload[L[k]||k]=o[k];payload.botcheck=false;
+fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
+.then(function(r){return r.json()}).then(function(j){
+if(j&&j.success){f.reset();sync();say('ok','<b>Request sent.</b> Thank you, '+o.name.split(' ')[0]+'. The booking team will reply to '+o.email+' soon.')}else throw new Error('x')})
+.catch(function(){say('bad','Something went wrong and your request was not sent. Email it to <a href="mailto:'+BOOKING_TO+'?subject='+encodeURIComponent(subject)+'">'+BOOKING_TO+'</a> or call a booking number above.')})
+.then(function(){btn.disabled=false;btn.textContent='Send booking request'})});
+})();

@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="https://www.suonosai.com/images/og-image.jpg">
 <link rel="canonical" href="https://www.suonosai.com/">
 <title>Suono Sai | Official Site, Events and Press Kit</title>
-<meta name="description" content="Suono Sai: Indian-Nigerian Afro-Pop and Hip-Hop artist. Events, tickets for PARABOYZ Fest, music, social and booking.">
+<meta name="description" content="Suono Sai: Indian-Nigerian Afro-Pop and Hip-Hop artist. Events, tickets for PARABOYZ Fest, music, social and a booking form.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Barlow:wght@400;500;700&display=swap" rel="stylesheet">
@@ -171,12 +171,58 @@
  <div class="lines">
   <div><span>Nigeria</span><a href="tel:+2349014053555">+234 901 405 3555</a></div>
   <div><span>North America</span><a href="tel:+14376604623">+1 437 660 4623</a></div>
- </div></div></section></div>
+ </div>
+ <p class="alt">Prefer email? <a href="mailto:Paraboyglobalrecords@gmail.com">Paraboyglobalrecords@gmail.com</a></p></div></section>
+<section class="bsec"><div class="wrap">
+ <h2 class="h">Send a <span>booking request</span></h2>
+ <p class="lead">One form for every kind of booking. Pick what you need, tell us the details, and the team replies by email or WhatsApp.</p>
+ <form id="bform" class="bform" novalidate>
+  <fieldset class="types"><legend>What are you booking?</legend>
+   <div class="chips">
+    <label><input type="radio" name="type" value="Headline show or concert" data-g="show" required><span>Headline show or concert</span></label>
+    <label><input type="radio" name="type" value="Festival appearance" data-g="show"><span>Festival appearance</span></label>
+    <label><input type="radio" name="type" value="Club or lounge performance" data-g="show"><span>Club or lounge</span></label>
+    <label><input type="radio" name="type" value="Private event or party" data-g="show"><span>Private event or party</span></label>
+    <label><input type="radio" name="type" value="Corporate or brand event" data-g="show"><span>Corporate or brand event</span></label>
+    <label><input type="radio" name="type" value="Brand partnership or endorsement" data-g="work"><span>Brand partnership</span></label>
+    <label><input type="radio" name="type" value="Feature or collaboration" data-g="work"><span>Feature or collab</span></label>
+    <label><input type="radio" name="type" value="Studio session or production" data-g="work"><span>Studio session</span></label>
+    <label><input type="radio" name="type" value="Press, interview or media" data-g="work"><span>Press or interview</span></label>
+    <label><input type="radio" name="type" value="Other" data-g="work"><span>Other</span></label>
+   </div>
+   <p class="err" data-for="type" hidden>Choose what you are booking.</p>
+  </fieldset>
+  <div class="cols">
+   <div class="f"><label for="b-name">Your name</label><input id="b-name" name="name" autocomplete="name" required><p class="err" hidden>Enter your name.</p></div>
+   <div class="f"><label for="b-email">Email</label><input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required><p class="err" hidden>Enter a valid email address.</p></div>
+   <div class="f"><label for="b-phone">Phone or WhatsApp <em>(optional)</em></label><input id="b-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+234 or +1"></div>
+   <div class="f"><label for="b-org">Company or organisation <em>(optional)</em></label><input id="b-org" name="organisation" autocomplete="organization"></div>
+  </div>
+  <div class="cols grp" data-show="show" hidden>
+   <div class="f"><label for="b-date">Event date <em>(or best guess)</em></label><input id="b-date" name="event_date" type="date"></div>
+   <div class="f"><label for="b-city">City and country</label><input id="b-city" name="city_country" autocomplete="off" placeholder="Lagos, Nigeria"></div>
+   <div class="f"><label for="b-venue">Venue <em>(optional)</em></label><input id="b-venue" name="venue"></div>
+   <div class="f"><label for="b-cap">Expected attendance</label><select id="b-cap" name="attendance"><option value="">Select</option><option>Under 200</option><option>200 to 500</option><option>500 to 1,000</option><option>1,000 to 5,000</option><option>5,000+</option></select></div>
+  </div>
+  <div class="cols grp" data-show="work" hidden>
+   <div class="f wide"><label for="b-link">Link to the project, brand or brief <em>(optional)</em></label><input id="b-link" name="link" type="url" inputmode="url" placeholder="https://"></div>
+  </div>
+  <div class="cols grp" data-show="any" hidden>
+   <div class="f"><label for="b-budget">Budget <em>(include currency, optional)</em></label><input id="b-budget" name="budget" placeholder="e.g. NGN 2,000,000 or USD 3,000"></div>
+   <div class="f"><label for="b-contact">Best way to reach you</label><select id="b-contact" name="preferred_contact"><option>Email</option><option>WhatsApp</option><option>Phone call</option></select></div>
+  </div>
+  <div class="f"><label for="b-msg">Tell us about the booking</label><textarea id="b-msg" name="message" rows="5" required placeholder="What is it, when, where, and anything we should know."></textarea><p class="err" hidden>Add a few details about the booking.</p></div>
+  <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+  <div class="send"><button class="btn" type="submit" id="b-send">Send booking request</button><p class="note" id="b-note">Your request goes to the Para Boy booking team. Replies usually come within 2 business days.</p></div>
+  <p class="status" id="b-status" role="status" aria-live="polite" hidden></p>
+ </form>
+</div></section>
+</div>
 </main>
 
 <section class="book" id="bk" style="padding-block:2.5rem"><div class="wrap"><div class="lines" style="margin:0">
  <div><span>Booking, Nigeria</span><a href="tel:+2349014053555">+234 901 405 3555</a></div>
- <div><span>Booking, North America</span><a href="tel:+14376604623">+1 437 660 4623</a></div></div></div></section>
+ <div><span>Booking, North America</span><a href="tel:+14376604623">+1 437 660 4623</a></div></div><p class="alt"><a href="#booking">Send a booking request online</a> or email <a href="mailto:Paraboyglobalrecords@gmail.com">Paraboyglobalrecords@gmail.com</a></p></div></section>
 <footer><div class="wrap"><span>Suono Sai | Official Site and Press Kit</span><span>Photography: Clicks, Famou3</span><span style="flex-basis:100%;border-top:1px solid var(--line);padding-top:.8rem;margin-top:.4rem">Web developed by <a href="https://778dev.ca" rel="noopener" style="color:var(--bone)">778dev.ca</a> and managed by <a href="https://www.vuga.org" rel="noopener" style="color:var(--bone)">Vuga Music Inc.</a></span></div></footer>
 <script src="js/site.js" defer></script>
 </body>

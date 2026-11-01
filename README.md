@@ -27,6 +27,11 @@ Static site (HTML, CSS, JavaScript). No build step, no server code. Upload the c
 
 Then point your domain at the host and enable HTTPS (all of the above do this for free).
 
+## Booking form
+The form is on the Booking page (index.html, `#bform`; logic at the bottom of js/site.js). It sends to Paraboyglobalrecords@gmail.com.
+- To send straight to the inbox: get a free access key at https://web3forms.com (enter Paraboyglobalrecords@gmail.com, the key is emailed), then set `BOOKING_KEY` at the top of the booking-form block in js/site.js.
+- With no key set, the form opens the visitor's email app with the request pre-filled, so it still works.
+
 ## Common edits
 - Event date and countdown: js/site.js, the numbers in `Date.UTC(2026,11,13,16,0,0)` (start, UTC, month is 0-based) and `Date.UTC(2026,11,14,0,0,0)` (end).
 - Ticket link: search all files for `tixtango.com/paraboyzfest` and replace.
